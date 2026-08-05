@@ -1,13 +1,17 @@
 let currentQuestion = 0;
 let score = 0;
+let selectedType = "";
 
 
-function startPractice(){
+function startType(type){
 
-    currentQuestion = 0;
-    score = 0;
+selectedType = type;
 
-    showQuestion();
+currentQuestion = 0;
+score = 0;
+
+
+showQuestion();
 
 }
 
@@ -15,85 +19,116 @@ function startPractice(){
 
 function showQuestion(){
 
-    let q = questions[currentQuestion];
+
+let filteredQuestions =
+questions.filter(q => q.type === selectedType);
 
 
-    document.getElementById("selected").innerHTML =
-    q.type;
 
+if(filteredQuestions.length === 0){
 
-    document.getElementById("result").innerHTML = `
+document.getElementById("result").innerHTML=
 
-    <h2>${q.question}</h2>
+`
+<h2>No questions available</h2>
+<p>This section is under development.</p>
+`;
 
-    ${q.options.map(option =>
-
-    `
-    <button class="answer-btn" 
-    onclick="checkAnswer('${option}')">
-    ${option}
-    </button>
-    `
-
-    ).join("")}
-
-
-    `;
+return;
 
 }
 
 
 
-function checkAnswer(selectedAnswer){
-
-    let q = questions[currentQuestion];
+let q = filteredQuestions[currentQuestion];
 
 
-    console.log("Selected:", selectedAnswer);
-    console.log("Correct:", q.answer);
+document.getElementById("selected").innerHTML =
+q.type;
 
 
-    if(selectedAnswer.trim() === q.answer.trim()){
 
-        score++;
+document.getElementById("result").innerHTML =
 
-        alert("Correct ✅");
+`
 
-    }
-
-    else{
-
-        alert(
-        "Wrong ❌\nCorrect answer: "
-        + q.answer
-        );
-
-    }
+<h2>${q.question}</h2>
 
 
-    currentQuestion++;
+${q.options.map(option =>
+
+`
+
+<button onclick="checkAnswer('${option}')">
+
+${option}
+
+</button>
+
+`
+
+).join("")}
+
+`;
+
+}
 
 
-    if(currentQuestion < questions.length){
 
-        showQuestion();
-
-    }
-
-    else{
+function checkAnswer(answer){
 
 
-        document.getElementById("result").innerHTML = `
-
-        <h2>Practice Completed 🎉</h2>
-
-        <h3>
-        Score: ${score}/${questions.length}
-        </h3>
-
-        `;
+let filteredQuestions =
+questions.filter(q => q.type === selectedType);
 
 
-    }
+let q = filteredQuestions[currentQuestion];
+
+
+if(answer === q.answer){
+
+score++;
+
+alert("Correct ✅");
+
+}
+
+else{
+
+alert(
+"Wrong ❌\nCorrect answer: "
++ q.answer
+);
+
+}
+
+
+
+currentQuestion++;
+
+
+if(currentQuestion < filteredQuestions.length){
+
+showQuestion();
+
+}
+
+else{
+
+
+document.getElementById("result").innerHTML=
+
+`
+
+<h2>Finished 🎉</h2>
+
+<h3>
+Score: ${score}/${filteredQuestions.length}
+</h3>
+
+`;
+
+}
+
 
 }
