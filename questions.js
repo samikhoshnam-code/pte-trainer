@@ -13,6 +13,7 @@ options:[
 answer:"adopted"
 },
 
+
 {
 id:2,
 type:"RW FIB",
@@ -26,6 +27,7 @@ options:[
 answer:"role"
 },
 
+
 {
 id:3,
 type:"RFIB",
@@ -37,6 +39,21 @@ options:[
 "issued"
 ],
 answer:"issues"
+},
+
+
+{
+id:4,
+type:"WFD",
+question:"Students should develop critical thinking skills.",
+options:[
+"Students should develop critical thinking skills.",
+"Students develop thinking skills.",
+"Students should develop critical skills.",
+"Students thinking skills."
+],
+answer:"Students should develop critical thinking skills."
 }
+
 
 ];
