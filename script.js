@@ -1,7 +1,7 @@
 let currentQuestion = 0;
-let score = 0;
 let selectedType = "";
 let filteredQuestions = [];
+let score = 0;
 
 
 function startType(type){
@@ -12,24 +12,23 @@ function startType(type){
         q => q.type === type
     );
 
-
     currentQuestion = 0;
     score = 0;
+
+
+    document.getElementById("selected").innerHTML =
+    type;
 
 
     if(filteredQuestions.length === 0){
 
         document.getElementById("result").innerHTML =
         `
-        <h2>Coming Soon 🚀</h2>
-        <p>No questions available for ${type} yet.</p>
+        <h2>Coming Soon</h2>
+        <p>No questions available.</p>
         `;
 
-        document.getElementById("selected").innerHTML =
-        type;
-
         return;
-
     }
 
 
@@ -39,19 +38,9 @@ function startType(type){
 
 
 
-
 function showQuestion(){
 
     let q = filteredQuestions[currentQuestion];
-
-
-    document.getElementById("selected").innerHTML =
-    `
-    ${selectedType}
-    <br>
-    Question ${currentQuestion + 1}/${filteredQuestions.length}
-    `;
-
 
 
     document.getElementById("result").innerHTML =
@@ -59,100 +48,60 @@ function showQuestion(){
     `
     <h2>${q.question}</h2>
 
-
     ${q.options.map(option =>
 
     `
-    <button onclick="checkAnswer(this, '${option}')">
+    <button onclick="checkAnswer('${option}')">
     ${option}
     </button>
-    `
 
-    ).join("")}
+    `).join("")}
 
     `;
-
 
 }
 
 
 
-
-function checkAnswer(button, answer){
-
+function checkAnswer(answer){
 
     let q = filteredQuestions[currentQuestion];
 
 
-    let buttons =
-    document.querySelectorAll("#result button");
-
-
-    buttons.forEach(btn=>{
-        btn.disabled = true;
-    });
-
-
-
-    if(answer.trim() === q.answer.trim()){
-
+    if(answer === q.answer){
 
         score++;
 
-        button.style.background="green";
+        alert("Correct ✅");
 
+    }else{
+
+        alert(
+        "Wrong ❌ Correct answer: "
+        + q.answer
+        );
+
+    }
+
+
+    currentQuestion++;
+
+
+    if(currentQuestion < filteredQuestions.length){
+
+        showQuestion();
 
     }
     else{
 
-
-        button.style.background="red";
-
-
-        buttons.forEach(btn=>{
-
-            if(btn.innerText === q.answer){
-
-                btn.style.background="green";
-
-            }
-
-        });
-
+        document.getElementById("result").innerHTML =
+        `
+        <h2>Finished 🎉</h2>
+        <p>
+        Score: ${score}/${filteredQuestions.length}
+        </p>
+        `;
 
     }
-
-
-
-    setTimeout(()=>{
-
-
-        currentQuestion++;
-
-
-        if(currentQuestion < filteredQuestions.length){
-
-            showQuestion();
-
-        }
-        else{
-
-
-            document.getElementById("result").innerHTML=
-
-            `
-            <h2>Completed 🎉</h2>
-
-            <h3>
-            Score: ${score}/${filteredQuestions.length}
-            </h3>
-            `;
-
-        }
-
-
-    },1000);
-
-
 
 }
