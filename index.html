@@ -1,96 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Sam PTE Lab</title>
+
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
+
 <header>
+
     <h1>Sam PTE Lab</h1>
-    <p>Your Personal PTE Practice Platform</p>
+
+    <p>
+        Your Personal PTE Practice Platform
+    </p>
+
 </header>
+
 
 
 <main>
 
-    <section class="welcome">
-        <h2>Welcome to Sam PTE Lab</h2>
-<button onclick="startPractice()">
-Start Practice
-</button>
-        <p>
-            Practice PTE Reading, Listening, Writing and Speaking
-            with a structured learning system.
-        </p>
-    </section>
+
+<section class="welcome">
+
+    <h2>
+        Welcome to Sam PTE Lab
+    </h2>
 
 
-    <section class="modules">
-
-        <div class="card">
-            <h3>📖 Reading</h3>
-            <button onclick="startType('RW FIB')">
-RW FIB
-</button>
-            <button onclick="startType('RFIB')">
-RFIB
-</button>
-        </div>
+    <p>
+        Practice PTE Reading, Listening, Writing and Speaking
+        with a structured learning system.
+    </p>
 
 
-        <div class="card">
-            <h3>🎧 Listening</h3>
-            <button onclick="startType('WFD')">
-WFD
-</button>
-            <button onclick="openModule('Listening FIB')">
-                FIB
-            </button>
-        </div>
+</section>
 
 
-        <div class="card">
-            <h3>✍️ Writing</h3>
-            <button onclick="startType('WE')">
-Write Essay
-</button>
-        </div>
+
+<section class="modules">
 
 
-        <div class="card">
-            <h3>🗣 Speaking</h3>
-            <button onclick="openModule('Speaking')">
-                Practice
-            </button>
-        </div>
+<div class="card">
 
-    </section>
+    <h3>📖 Reading</h3>
 
 
-    <section id="result">
-        <h2 id="selected"></h2>
-        <p>
-            Module will be developed soon...
-        </p>
-    </section>
+    <button onclick="startType('RW FIB')">
+        RW FIB
+    </button>
+
+
+    <button onclick="startType('RFIB')">
+        RFIB
+    </button>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+    <h3>🎧 Listening</h3>
+
+
+    <button onclick="startType('WFD')">
+        WFD
+    </button>
+
+
+    <button onclick="startType('Listening FIB')">
+        FIB
+    </button>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+    <h3>✍️ Writing</h3>
+
+
+    <button onclick="startType('WE')">
+        Write Essay
+    </button>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+    <h3>🗣 Speaking</h3>
+
+
+    <button onclick="startType('Speaking')">
+        Practice
+    </button>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+<section id="practice-area">
+
+
+<h2 id="selected">
+Choose a practice section
+</h2>
+
+
+
+<div id="result">
+
+
+<p>
+Select a PTE module to start practicing.
+</p>
+
+
+</div>
+
+
+</section>
+
 
 
 </main>
 
 
+
+
+
 <footer>
-    <p>
-        © 2026 Sam PTE Lab
-    </p>
+
+<p>
+© 2026 Sam PTE Lab
+</p>
+
+
 </footer>
 
 
+
+
+
 <script src="questions.js"></script>
+
 <script src="script.js"></script>
 
+
+
 </body>
+
+
 </html>
