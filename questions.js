@@ -56,30 +56,5 @@ answer:"Students should develop critical thinking skills."
 }
 ,
 
-{
-id:5,
-type:"Listening FIB",
-question:"The lecture was very _____ for students.",
-options:[
-"useful",
-"use",
-"used",
-"using"
-],
-answer:"useful"
-},
-
-{
-id:6,
-type:"WE",
-question:"Technology has changed the way people communicate.",
-options:[
-"Write Essay",
-"Skip",
-"Practice",
-"Review"
-],
-answer:"Write Essay"
-}
 
 ];
