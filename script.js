@@ -1,134 +1,158 @@
 let currentQuestion = 0;
 let score = 0;
 let selectedType = "";
+let filteredQuestions = [];
 
 
 function startType(type){
 
-selectedType = type;
+    selectedType = type;
 
-currentQuestion = 0;
-score = 0;
+    filteredQuestions = questions.filter(
+        q => q.type === type
+    );
 
 
-showQuestion();
+    currentQuestion = 0;
+    score = 0;
+
+
+    if(filteredQuestions.length === 0){
+
+        document.getElementById("result").innerHTML =
+        `
+        <h2>Coming Soon 🚀</h2>
+        <p>No questions available for ${type} yet.</p>
+        `;
+
+        document.getElementById("selected").innerHTML =
+        type;
+
+        return;
+
+    }
+
+
+    showQuestion();
 
 }
+
 
 
 
 function showQuestion(){
 
-
-let filteredQuestions =
-questions.filter(q => q.type === selectedType);
+    let q = filteredQuestions[currentQuestion];
 
 
+    document.getElementById("selected").innerHTML =
+    `
+    ${selectedType}
+    <br>
+    Question ${currentQuestion + 1}/${filteredQuestions.length}
+    `;
 
-if(filteredQuestions.length === 0){
 
-document.getElementById("result").innerHTML=
 
-`
-<h2>No questions available</h2>
-<p>This section is under development.</p>
-`;
+    document.getElementById("result").innerHTML =
 
-return;
+    `
+    <h2>${q.question}</h2>
+
+
+    ${q.options.map(option =>
+
+    `
+    <button onclick="checkAnswer(this, '${option}')">
+    ${option}
+    </button>
+    `
+
+    ).join("")}
+
+    `;
+
 
 }
 
 
 
-let q = filteredQuestions[currentQuestion];
+
+function checkAnswer(button, answer){
 
 
-document.getElementById("selected").innerHTML =
-q.type;
+    let q = filteredQuestions[currentQuestion];
 
 
-
-document.getElementById("result").innerHTML =
-
-`
-
-<h2>${q.question}</h2>
+    let buttons =
+    document.querySelectorAll("#result button");
 
 
-${q.options.map(option =>
-
-`
-
-<button onclick="checkAnswer('${option}')">
-
-${option}
-
-</button>
-
-`
-
-).join("")}
-
-`;
-
-}
+    buttons.forEach(btn=>{
+        btn.disabled = true;
+    });
 
 
 
-function checkAnswer(answer){
+    if(answer.trim() === q.answer.trim()){
 
 
-let filteredQuestions =
-questions.filter(q => q.type === selectedType);
+        score++;
+
+        button.style.background="green";
 
 
-let q = filteredQuestions[currentQuestion];
+    }
+    else{
 
 
-if(answer === q.answer){
-
-score++;
-
-alert("Correct ✅");
-
-}
-
-else{
-
-alert(
-"Wrong ❌\nCorrect answer: "
-+ q.answer
-);
-
-}
+        button.style.background="red";
 
 
+        buttons.forEach(btn=>{
 
-currentQuestion++;
+            if(btn.innerText === q.answer){
 
+                btn.style.background="green";
 
-if(currentQuestion < filteredQuestions.length){
+            }
 
-showQuestion();
-
-}
-
-else{
+        });
 
 
-document.getElementById("result").innerHTML=
+    }
 
-`
 
-<h2>Finished 🎉</h2>
 
-<h3>
-Score: ${score}/${filteredQuestions.length}
-</h3>
+    setTimeout(()=>{
 
-`;
 
-}
+        currentQuestion++;
+
+
+        if(currentQuestion < filteredQuestions.length){
+
+            showQuestion();
+
+        }
+        else{
+
+
+            document.getElementById("result").innerHTML=
+
+            `
+            <h2>Completed 🎉</h2>
+
+            <h3>
+            Score: ${score}/${filteredQuestions.length}
+            </h3>
+            `;
+
+        }
+
+
+    },1000);
+
 
 
 }
