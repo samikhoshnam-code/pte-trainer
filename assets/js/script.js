@@ -1,3 +1,11 @@
+const params = new URLSearchParams(window.location.search);
+const urlType = params.get("type");
+
+if (urlType) {
+    window.onload = () => {
+        startType(urlType);
+    };
+}
 let currentQuestion = 0;
 let selectedType = "";
 let filteredQuestions = [];
