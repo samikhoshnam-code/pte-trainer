@@ -71,5 +71,24 @@ footer {
 
     text-align: center;
     padding: 20px;
+    .modules{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    padding:40px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:30px;
+    text-align:center;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
 
 }
