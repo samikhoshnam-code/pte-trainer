@@ -1,40 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>PTE Trainer</title>
 
     <link rel="stylesheet" href="assets/css/main.css">
+
 </head>
+
 <body>
 
-    <header class="header">
-        <h1>PTE Trainer</h1>
-        <p>Choose a section to start practice</p>
-    </header>
+<div class="background"></div>
 
-    <main class="container">
+<header class="hero">
 
-        <div class="card" onclick="goToPractice('reading')">
-            <h2>📖 Reading</h2>
-        </div>
+    <h1>PTE Trainer</h1>
 
-        <div class="card" onclick="goToPractice('listening')">
-            <h2>🎧 Listening</h2>
-        </div>
+    <p>
+        Master every section of the PTE Academic Exam
+    </p>
 
-        <div class="card" onclick="goToPractice('speaking')">
-            <h2>🎤 Speaking</h2>
-        </div>
+</header>
 
-        <div class="card" onclick="goToPractice('writing')">
-            <h2>✍️ Writing</h2>
-        </div>
 
-    </main>
+<main class="dashboard">
 
-    <script src="assets/js/home.js"></script>
+    <div class="card" onclick="goToPractice('reading')">
+
+        <div class="icon">📖</div>
+
+        <h2>Reading</h2>
+
+        <p>Practice all Reading question types.</p>
+
+    </div>
+
+
+    <div class="card" onclick="goToPractice('listening')">
+
+        <div class="icon">🎧</div>
+
+        <h2>Listening</h2>
+
+        <p>Improve listening with real practice.</p>
+
+    </div>
+
+
+    <div class="card" onclick="goToPractice('speaking')">
+
+        <div class="icon">🎤</div>
+
+        <h2>Speaking</h2>
+
+        <p>Boost fluency and pronunciation.</p>
+
+    </div>
+
+
+    <div class="card" onclick="goToPractice('writing')">
+
+        <div class="icon">✍️</div>
+
+        <h2>Writing</h2>
+
+        <p>Templates, essays and summaries.</p>
+
+    </div>
+
+</main>
+
+
+<section class="stats">
+
+    <div class="stat">
+
+        <h3>Progress</h3>
+
+        <span>0%</span>
+
+    </div>
+
+    <div class="stat">
+
+        <h3>Accuracy</h3>
+
+        <span>0%</span>
+
+    </div>
+
+    <div class="stat">
+
+        <h3>Daily Goal</h3>
+
+        <span>0 / 20</span>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    © 2026 PTE Trainer
+
+</footer>
+
+<script src="assets/js/home.js"></script>
 
 </body>
+
 </html>
