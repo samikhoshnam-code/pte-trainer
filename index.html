@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTE Trainer</title>
 
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>PTE Trainer</h1>
+        <p>Choose a section to start practice</p>
+    </header>
+
+    <main class="container">
+
+        <div class="card" onclick="goToPractice('reading')">
+            <h2>📖 Reading</h2>
+        </div>
+
+        <div class="card" onclick="goToPractice('listening')">
+            <h2>🎧 Listening</h2>
+        </div>
+
+        <div class="card" onclick="goToPractice('speaking')">
+            <h2>🎤 Speaking</h2>
+        </div>
+
+        <div class="card" onclick="goToPractice('writing')">
+            <h2>✍️ Writing</h2>
+        </div>
+
+    </main>
+
+    <script src="assets/js/home.js"></script>
+
+</body>
+</html>
