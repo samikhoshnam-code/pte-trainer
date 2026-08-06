@@ -1,185 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sam PTE Lab</title>
+    <title>PTE Trainer</title>
 
-    <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
-
 
 <body>
 
-
 <header>
-
-    <h1>Sam PTE Lab</h1>
-
-    <p>
-        Your Personal PTE Practice Platform
-    </p>
-
+    <h1>PTE Trainer</h1>
 </header>
-
 
 
 <main>
 
+    <section id="question-box">
 
-<section class="welcome">
+        <h2 id="question-title">
+            Question
+        </h2>
 
-    <h2>
-        Welcome to Sam PTE Lab
-    </h2>
+        <div id="question-text">
+            Loading question...
+        </div>
 
 
-    <p>
-        Practice PTE Reading, Listening, Writing and Speaking
-        with a structured learning system.
-    </p>
+        <div id="answer-area">
 
+        </div>
 
-</section>
 
+        <button id="next-btn">
+            Next Question
+        </button>
 
-
-<section class="modules">
-
-
-<div class="card">
-
-    <h3>📖 Reading</h3>
-
-
-    <button onclick="startType('RW FIB')">
-        RW FIB
-    </button>
-
-
-    <button onclick="startType('RFIB')">
-        RFIB
-    </button>
-
-
-</div>
-
-
-
-
-<div class="card">
-
-    <h3>🎧 Listening</h3>
-
-
-    <button onclick="startType('WFD')">
-        WFD
-    </button>
-
-
-    <button onclick="startType('Listening FIB')">
-        FIB
-    </button>
-
-
-</div>
-
-
-
-
-
-<div class="card">
-
-    <h3>✍️ Writing</h3>
-
-
-    <button onclick="startType('WE')">
-        Write Essay
-    </button>
-
-
-</div>
-
-
-
-
-
-<div class="card">
-
-    <h3>🗣 Speaking</h3>
-
-
-    <button onclick="startType('Speaking')">
-        Practice
-    </button>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-<section id="practice-area">
-
-
-<h2 id="selected">
-Choose a practice section
-</h2>
-
-
-
-<div id="result">
-
-
-<p>
-Select a PTE module to start practicing.
-</p>
-
-
-</div>
-
-
-</section>
-
+    </section>
 
 
 </main>
 
 
-
-
-
 <footer>
-
-<p>
-© 2026 Sam PTE Lab
-</p>
-
-
+    <p>
+        PTE Practice Platform
+    </p>
 </footer>
 
 
-
-
-
-<script src="questions.js"></script>
-    
-<script src="wfd.js"></script>
-    
-<script src="script.js"></script>
-
-
+<script src="assets/js/app.js"></script>
 
 </body>
-
-
 </html>
