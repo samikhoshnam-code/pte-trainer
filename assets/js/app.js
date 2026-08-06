@@ -1,3 +1,5 @@
+alert("app.js loaded");
+
 let currentQuestion = 0;
 
 const questionText = document.getElementById("question-text");
