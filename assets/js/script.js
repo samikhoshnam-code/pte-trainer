@@ -15,6 +15,7 @@ let score = 0;
 function startType(type){
 
     selectedType = type;
+document.getElementById("selected").textContent = type;
 
 
     if(type === "WFD"){
