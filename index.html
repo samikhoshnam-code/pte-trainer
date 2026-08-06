@@ -8,107 +8,259 @@
 
     <title>PTE Trainer</title>
 
+    <meta name="description" content="Professional PTE Practice Platform">
+
     <link rel="stylesheet" href="assets/css/main.css">
 
 </head>
 
 <body>
 
-<div class="background"></div>
+<div class="bg-circle circle1"></div>
+<div class="bg-circle circle2"></div>
 
 <header class="hero">
 
-    <h1>PTE Trainer</h1>
+    <div class="logo">
+
+        <span class="logo-icon">🎓</span>
+
+        <span class="logo-text">PTE Trainer</span>
+
+    </div>
+
+    <h1>
+
+        Master Your PTE Academic Journey
+
+    </h1>
 
     <p>
-        Master every section of the PTE Academic Exam
+
+        Practice smarter. Improve faster. Achieve your target score.
+
     </p>
+
+    <button class="start-btn"
+            onclick="goToPractice('listening')">
+
+        Start Practice
+
+    </button>
 
 </header>
 
 
-<main class="dashboard">
 
-    <div class="card" onclick="goToPractice('reading')">
+<section class="modules">
 
-        <div class="icon">📖</div>
+    <h2>
 
-        <h2>Reading</h2>
+        Practice Modules
 
-        <p>Practice all Reading question types.</p>
+    </h2>
 
-    </div>
+    <div class="cards">
 
+        <div class="card reading"
 
-    <div class="card" onclick="goToPractice('listening')">
+             onclick="goToPractice('reading')">
 
-        <div class="icon">🎧</div>
+            <div class="emoji">
 
-        <h2>Listening</h2>
+                📖
 
-        <p>Improve listening with real practice.</p>
+            </div>
 
-    </div>
+            <h3>
 
+                Reading
 
-    <div class="card" onclick="goToPractice('speaking')">
+            </h3>
 
-        <div class="icon">🎤</div>
+            <p>
 
-        <h2>Speaking</h2>
+                Complete Reading practice with all question types.
 
-        <p>Boost fluency and pronunciation.</p>
+            </p>
 
-    </div>
-
-
-    <div class="card" onclick="goToPractice('writing')">
-
-        <div class="icon">✍️</div>
-
-        <h2>Writing</h2>
-
-        <p>Templates, essays and summaries.</p>
-
-    </div>
-
-</main>
+        </div>
 
 
-<section class="stats">
 
-    <div class="stat">
+        <div class="card listening"
 
-        <h3>Progress</h3>
+             onclick="goToPractice('listening')">
 
-        <span>0%</span>
+            <div class="emoji">
 
-    </div>
+                🎧
 
-    <div class="stat">
+            </div>
 
-        <h3>Accuracy</h3>
+            <h3>
 
-        <span>0%</span>
+                Listening
 
-    </div>
+            </h3>
 
-    <div class="stat">
+            <p>
 
-        <h3>Daily Goal</h3>
+                WFD, SST, HIW and more.
 
-        <span>0 / 20</span>
+            </p>
+
+        </div>
+
+
+
+        <div class="card speaking"
+
+             onclick="goToPractice('speaking')">
+
+            <div class="emoji">
+
+                🎤
+
+            </div>
+
+            <h3>
+
+                Speaking
+
+            </h3>
+
+            <p>
+
+                Improve fluency and pronunciation.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="card writing"
+
+             onclick="goToPractice('writing')">
+
+            <div class="emoji">
+
+                ✍️
+
+            </div>
+
+            <h3>
+
+                Writing
+
+            </h3>
+
+            <p>
+
+                Essay, SWT and Writing Templates.
+
+            </p>
+
+        </div>
 
     </div>
 
 </section>
 
 
+
+<section class="statistics">
+
+    <h2>
+
+        Your Progress
+
+    </h2>
+
+    <div class="stats-grid">
+
+        <div class="stat-box">
+
+            <span class="number">
+
+                0%
+
+            </span>
+
+            <span class="title">
+
+                Progress
+
+            </span>
+
+        </div>
+
+        <div class="stat-box">
+
+            <span class="number">
+
+                0%
+
+            </span>
+
+            <span class="title">
+
+                Accuracy
+
+            </span>
+
+        </div>
+
+        <div class="stat-box">
+
+            <span class="number">
+
+                0
+
+            </span>
+
+            <span class="title">
+
+                Daily Goal
+
+            </span>
+
+        </div>
+
+        <div class="stat-box">
+
+            <span class="number">
+
+                0
+
+            </span>
+
+            <span class="title">
+
+                Streak
+
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
 <footer>
 
-    © 2026 PTE Trainer
+    <p>
+
+        © 2026 PTE Trainer
+
+    </p>
 
 </footer>
+
+
 
 <script src="assets/js/home.js"></script>
 
