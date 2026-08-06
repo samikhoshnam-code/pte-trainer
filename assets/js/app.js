@@ -1,45 +1,40 @@
-const question = {
-
-    text: "The government should invest more money in education.",
-
-    answers: [
-        "Agree",
-        "Disagree",
-        "Not sure"
-    ]
-
-};
-
+let currentQuestion = 0;
 
 const questionText = document.getElementById("question-text");
 const answerArea = document.getElementById("answer-area");
+const nextBtn = document.getElementById("next-btn");
+const questionTitle = document.getElementById("question-title");
 
+function loadQuestion(index) {
 
-function loadQuestion(){
+    const question = questions[index];
 
-    questionText.innerHTML = question.text;
+    questionTitle.textContent =
+        `${question.type} (${index + 1}/${questions.length})`;
 
+    questionText.textContent = question.question;
 
     answerArea.innerHTML = "";
 
-
-    question.answers.forEach(answer => {
-
+    question.options.forEach(option => {
 
         const button = document.createElement("button");
 
-        button.innerText = answer;
-
+        button.textContent = option;
 
         button.style.margin = "5px";
 
+        button.onclick = () => {
 
-        button.onclick = function(){
-
-            console.log("Selected:", answer);
+            if (option === question.answer) {
+                button.style.background = "#4CAF50";
+                button.style.color = "white";
+            } else {
+                button.style.background = "#f44336";
+                button.style.color = "white";
+            }
 
         };
-
 
         answerArea.appendChild(button);
 
@@ -47,6 +42,16 @@ function loadQuestion(){
 
 }
 
+nextBtn.addEventListener("click", () => {
 
+    currentQuestion++;
 
-loadQuestion();
+    if (currentQuestion >= questions.length) {
+        currentQuestion = 0;
+    }
+
+    loadQuestion(currentQuestion);
+
+});
+
+loadQuestion(currentQuestion);
