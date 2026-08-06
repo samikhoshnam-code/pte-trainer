@@ -5,45 +5,201 @@
 }
 
 body{
-    font-family:Arial,sans-serif;
-    background:#f5f7fb;
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    background:#eef3ff;
+
+    color:#222;
+
+    overflow-x:hidden;
+
 }
 
-.header{
+.background{
+
+    position:fixed;
+
+    width:100%;
+
+    height:320px;
+
+    background:linear-gradient(135deg,#1a73e8,#4f9cff);
+
+    top:0;
+
+    left:0;
+
+    z-index:-1;
+
+    border-bottom-left-radius:50px;
+
+    border-bottom-right-radius:50px;
+
+}
+
+.hero{
+
     text-align:center;
-    padding:40px 20px;
+
+    color:white;
+
+    padding:70px 20px 50px;
+
 }
 
-.header h1{
-    color:#1a73e8;
-    margin-bottom:10px;
+.hero h1{
+
+    font-size:52px;
+
+    margin-bottom:15px;
+
 }
 
-.container{
+.hero p{
+
+    font-size:20px;
+
+    opacity:.95;
+
+}
+
+.dashboard{
+
     width:90%;
-    max-width:1000px;
-    margin:auto;
+
+    max-width:1200px;
+
+    margin:30px auto;
 
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 
-    gap:20px;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+
 }
 
 .card{
+
     background:white;
-    padding:40px;
-    border-radius:15px;
+
+    border-radius:20px;
+
+    padding:35px;
 
     text-align:center;
 
     cursor:pointer;
 
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
 
-    transition:0.3s;
+    transition:.3s;
+
 }
 
 .card:hover{
-    transform:translateY(-5px);
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 35px rgba(0,0,0,.18);
+
+}
+
+.icon{
+
+    font-size:55px;
+
+    margin-bottom:20px;
+
+}
+
+.card h2{
+
+    margin-bottom:12px;
+
+    color:#1a73e8;
+
+}
+
+.card p{
+
+    color:#666;
+
+    line-height:1.5;
+
+}
+
+.stats{
+
+    width:90%;
+
+    max-width:1000px;
+
+    margin:50px auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+
+    gap:20px;
+
+}
+
+.stat{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.stat h3{
+
+    color:#777;
+
+    margin-bottom:10px;
+
+}
+
+.stat span{
+
+    font-size:34px;
+
+    font-weight:bold;
+
+    color:#1a73e8;
+
+}
+
+footer{
+
+    text-align:center;
+
+    color:#666;
+
+    margin:40px 0;
+
+}
+
+@media(max-width:700px){
+
+.hero h1{
+
+font-size:36px;
+
+}
+
+.hero p{
+
+font-size:16px;
+
+}
+
 }
