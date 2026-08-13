@@ -1,0 +1,370 @@
+* {
+    box-sizing:
+        border-box;
+
+    margin:
+        0;
+
+    padding:
+        0;
+}
+
+
+body {
+    min-height:
+        100vh;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1769e0,
+            #4f8df7
+        );
+}
+
+
+.auth-container {
+    width:
+        100%;
+
+    max-width:
+        430px;
+}
+
+
+.auth-box {
+    background:
+        white;
+
+    border-radius:
+        22px;
+
+    padding:
+        35px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(
+            0,
+            0,
+            0,
+            0.18
+        );
+
+    text-align:
+        center;
+}
+
+
+.auth-box h1 {
+    color:
+        #1769e0;
+
+    font-size:
+        34px;
+
+    margin-bottom:
+        8px;
+}
+
+
+.auth-subtitle {
+    color:
+        #64748b;
+
+    font-size:
+        14px;
+
+    margin-bottom:
+        25px;
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+.auth-tabs {
+    display:
+        flex;
+
+    gap:
+        8px;
+
+    background:
+        #f1f5f9;
+
+    padding:
+        5px;
+
+    border-radius:
+        10px;
+
+    margin-bottom:
+        25px;
+}
+
+
+.auth-tab {
+    flex:
+        1;
+
+    border:
+        none;
+
+    border-radius:
+        8px;
+
+    background:
+        transparent;
+
+    color:
+        #64748b;
+
+    padding:
+        10px;
+
+    margin:
+        0;
+
+    font-size:
+        14px;
+
+    font-weight:
+        bold;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        none;
+
+    transform:
+        none;
+}
+
+
+.auth-tab:hover {
+    background:
+        #e2e8f0;
+
+    color:
+        #334155;
+
+    box-shadow:
+        none;
+
+    transform:
+        none;
+}
+
+
+.auth-tab.active {
+    background:
+        white;
+
+    color:
+        #1769e0;
+
+    box-shadow:
+        0 2px 6px
+        rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.auth-form h2 {
+    color:
+        #1f2937;
+
+    font-size:
+        22px;
+
+    margin-bottom:
+        20px;
+}
+
+
+.auth-form input {
+    width:
+        100%;
+
+    height:
+        48px;
+
+    padding:
+        0 14px;
+
+    margin-bottom:
+        12px;
+
+    border:
+        1px solid #d7deea;
+
+    border-radius:
+        10px;
+
+    outline:
+        none;
+
+    font-size:
+        15px;
+
+    background:
+        #fbfcff;
+}
+
+
+.auth-form input:focus {
+    border-color:
+        #1769e0;
+
+    background:
+        white;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            23,
+            105,
+            224,
+            0.10
+        );
+}
+
+
+.auth-submit {
+    width:
+        100%;
+
+    height:
+        48px;
+
+    margin:
+        8px 0 0;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    background:
+        #1769e0;
+
+    color:
+        white;
+
+    font-size:
+        15px;
+
+    font-weight:
+        bold;
+
+    cursor:
+        pointer;
+}
+
+
+.auth-submit:hover {
+    background:
+        #1257bd;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(
+            23,
+            105,
+            224,
+            0.22
+        );
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.auth-message {
+    min-height:
+        20px;
+
+    margin-top:
+        14px;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+}
+
+
+.auth-message.error {
+    color:
+        #dc2626;
+}
+
+
+.auth-message.success {
+    color:
+        #15803d;
+}
+
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden {
+    display:
+        none;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 500px) {
+
+    .auth-box {
+        padding:
+            25px 20px;
+    }
+
+
+    .auth-box h1 {
+        font-size:
+            29px;
+    }
+
+}
