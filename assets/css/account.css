@@ -3,35 +3,54 @@
 ========================================================= */
 
 .account-toggle {
-    position: fixed;
+    position: fixed !important;
 
-    left: 18px;
-    top: 18px;
+    left: 18px !important;
+    top: 18px !important;
 
-    z-index: 2100;
+    z-index: 99999 !important;
 
-    width: 48px;
-    height: 48px;
+    width: 48px !important;
+    height: 48px !important;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-width: 48px !important;
+    min-height: 48px !important;
 
-    border: none;
-    border-radius: 50%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: none !important;
+    outline: none !important;
+
+    border-radius: 50% !important;
 
     background:
         linear-gradient(
             135deg,
             #1769e0,
             #4f8df7
-        );
+        ) !important;
 
-    color: white;
+    color: #ffffff !important;
 
-    font-size: 21px;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif !important;
 
-    cursor: pointer;
+    font-size: 21px !important;
+    line-height: 1 !important;
+
+    text-align: center !important;
+
+    cursor: pointer !important;
+
+    visibility: visible !important;
+    opacity: 1 !important;
 
     box-shadow:
         0 6px 18px
@@ -40,17 +59,19 @@
             0,
             0,
             0.18
-        );
+        ) !important;
+
+    transform: none !important;
 
     transition:
         transform 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease !important;
 }
 
 
 .account-toggle:hover {
     transform:
-        translateY(-2px);
+        translateY(-2px) !important;
 
     box-shadow:
         0 9px 22px
@@ -59,27 +80,26 @@
             0,
             0,
             0.22
-        );
+        ) !important;
 }
 
 
 .account-toggle:active {
     transform:
-        scale(0.96);
+        scale(0.96) !important;
 }
 
 
 /* =========================================================
    DRAWER OVERLAY
-   MUST STAY BEHIND SIDEBAR
 ========================================================= */
 
 .account-drawer-overlay {
-    position: fixed;
+    position: fixed !important;
 
-    inset: 0;
+    inset: 0 !important;
 
-    z-index: 1999;
+    z-index: 9998 !important;
 
     background:
         rgba(
@@ -87,22 +107,26 @@
             23,
             42,
             0.35
-        );
+        ) !important;
 
-    opacity: 0;
+    opacity: 0 !important;
 
-    visibility: hidden;
+    visibility: hidden !important;
+
+    pointer-events: none !important;
 
     transition:
         opacity 0.25s ease,
-        visibility 0.25s ease;
+        visibility 0.25s ease !important;
 }
 
 
 .account-drawer-overlay.show {
-    opacity: 1;
+    opacity: 1 !important;
 
-    visibility: visible;
+    visibility: visible !important;
+
+    pointer-events: auto !important;
 }
 
 
@@ -111,21 +135,20 @@
 ========================================================= */
 
 .account-sidebar {
-    position: fixed;
+    position: fixed !important;
 
-    left: 0;
-    top: 0;
+    left: 0 !important;
+    top: 0 !important;
 
-    width: 270px;
-    height: 100vh;
+    width: 270px !important;
+    height: 100vh !important;
 
-    z-index: 2000;
+    z-index: 9999 !important;
 
-    background:
-        #ffffff;
+    background: #ffffff !important;
 
     border-right:
-        1px solid #e5e7eb;
+        1px solid #e5e7eb !important;
 
     box-shadow:
         8px 0 30px
@@ -134,21 +157,25 @@
             0,
             0,
             0.12
-        );
+        ) !important;
 
     transform:
-        translateX(-105%);
+        translateX(-105%) !important;
 
     transition:
-        transform 0.28s ease;
+        transform 0.28s ease !important;
 
-    overflow-y: auto;
+    overflow-y: auto !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
 }
 
 
 .account-sidebar.open {
     transform:
-        translateX(0);
+        translateX(0) !important;
 }
 
 
@@ -157,6 +184,8 @@
 ========================================================= */
 
 .account-sidebar-inner {
+    width: 100%;
+
     padding:
         76px 16px 25px;
 }
@@ -187,6 +216,8 @@
     align-items: center;
     justify-content: center;
 
+    flex-shrink: 0;
+
     border-radius: 50%;
 
     background:
@@ -201,8 +232,6 @@
     font-size: 19px;
 
     font-weight: bold;
-
-    flex-shrink: 0;
 }
 
 
@@ -224,20 +253,16 @@
 
     white-space: nowrap;
 
-    color:
-        #1f2937;
+    color: #1f2937;
 
-    font-size:
-        14px;
+    font-size: 14px;
 }
 
 
 .account-user-info span {
-    color:
-        #16a34a;
+    color: #16a34a;
 
-    font-size:
-        11px;
+    font-size: 11px;
 }
 
 
@@ -246,11 +271,9 @@
 ========================================================= */
 
 .account-divider {
-    height:
-        1px;
+    height: 1px;
 
-    background:
-        #e5e7eb;
+    background: #e5e7eb;
 
     margin:
         5px 0 12px;
@@ -258,88 +281,75 @@
 
 
 /* =========================================================
-   ACCOUNT MENU BUTTONS
+   MENU BUTTONS
 ========================================================= */
 
 .account-menu-btn {
-    width:
-        100%;
+    width: 100% !important;
 
-    min-height:
-        48px;
+    min-height: 48px !important;
 
-    display:
-        flex;
+    display: flex !important;
 
-    align-items:
-        center;
+    align-items: center !important;
 
-    gap:
-        12px;
+    gap: 12px !important;
 
     margin:
-        4px 0;
+        4px 0 !important;
 
     padding:
-        11px 12px;
+        11px 12px !important;
 
-    border:
-        none;
+    border: none !important;
 
-    border-radius:
-        10px;
+    border-radius: 10px !important;
 
-    background:
-        transparent;
+    background: transparent !important;
 
-    color:
-        #475569;
+    color: #475569 !important;
 
     font-family:
         Arial,
         Helvetica,
-        sans-serif;
+        sans-serif !important;
 
-    font-size:
-        14px;
+    font-size: 14px !important;
 
-    font-weight:
-        600;
+    font-weight: 600 !important;
 
-    text-align:
-        left;
+    text-align: left !important;
 
-    cursor:
-        pointer;
+    cursor: pointer !important;
 
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+    box-shadow: none !important;
+
+    transform: none !important;
+
+    outline: none !important;
 }
 
 
 .account-menu-btn:hover {
     background:
-        #eef5ff;
+        #eef5ff !important;
 
     color:
-        #1769e0;
+        #1769e0 !important;
 
     transform:
-        translateX(2px);
+        translateX(2px) !important;
 }
 
 
 .account-menu-icon {
-    width:
-        28px;
+    width: 28px;
 
-    text-align:
-        center;
+    flex-shrink: 0;
 
-    font-size:
-        18px;
+    text-align: center;
+
+    font-size: 18px;
 }
 
 
@@ -349,44 +359,37 @@
 
 .account-menu-btn.logout-btn {
     color:
-        #dc2626;
+        #dc2626 !important;
 }
 
 
 .account-menu-btn.logout-btn:hover {
     background:
-        #fef2f2;
+        #fef2f2 !important;
 
     color:
-        #b91c1c;
+        #b91c1c !important;
 }
 
 
 /* =========================================================
-   ACCOUNT MODAL OVERLAY
+   MODAL OVERLAY
 ========================================================= */
 
 .account-overlay {
-    position:
-        fixed;
+    position: fixed !important;
 
-    inset:
-        0;
+    inset: 0 !important;
 
-    z-index:
-        2200;
+    z-index: 100000 !important;
 
-    display:
-        none;
+    display: none;
 
-    align-items:
-        center;
+    align-items: center;
 
-    justify-content:
-        center;
+    justify-content: center;
 
-    padding:
-        20px;
+    padding: 20px;
 
     background:
         rgba(
@@ -394,38 +397,31 @@
             23,
             42,
             0.45
-        );
+        ) !important;
 }
 
 
 .account-overlay.show {
-    display:
-        flex;
+    display: flex !important;
 }
 
 
 /* =========================================================
-   ACCOUNT MODAL
+   MODAL
 ========================================================= */
 
 .account-modal {
-    position:
-        relative;
+    position: relative;
 
-    width:
-        100%;
+    width: 100%;
 
-    max-width:
-        430px;
+    max-width: 430px;
 
-    background:
-        #ffffff;
+    background: #ffffff;
 
-    border-radius:
-        20px;
+    border-radius: 20px;
 
-    padding:
-        30px;
+    padding: 30px;
 
     box-shadow:
         0 20px 50px
@@ -439,57 +435,38 @@
 
 
 /* =========================================================
-   MODAL CLOSE
+   CLOSE
 ========================================================= */
 
 .account-modal-close {
-    position:
-        absolute;
+    position: absolute;
 
-    right:
-        16px;
+    right: 16px;
+    top: 12px;
 
-    top:
-        12px;
+    width: 34px;
+    height: 34px;
 
-    width:
-        34px;
+    padding: 0;
+    margin: 0;
 
-    height:
-        34px;
+    border: none;
 
-    padding:
-        0;
+    border-radius: 50%;
 
-    margin:
-        0;
+    background: #f1f5f9;
 
-    border:
-        none;
+    color: #64748b;
 
-    border-radius:
-        50%;
+    font-size: 22px;
 
-    background:
-        #f1f5f9;
+    line-height: 34px;
 
-    color:
-        #64748b;
+    cursor: pointer;
 
-    font-size:
-        22px;
+    box-shadow: none;
 
-    line-height:
-        34px;
-
-    cursor:
-        pointer;
-
-    box-shadow:
-        none;
-
-    transform:
-        none;
+    transform: none;
 }
 
 
@@ -507,47 +484,33 @@
 ========================================================= */
 
 .account-modal-header {
-    display:
-        flex;
+    display: flex;
 
-    align-items:
-        center;
+    align-items: center;
 
-    gap:
-        14px;
+    gap: 14px;
 
-    margin-bottom:
-        25px;
+    margin-bottom: 25px;
 
-    padding-right:
-        30px;
+    padding-right: 30px;
 }
 
 
 .account-modal-icon {
-    width:
-        48px;
+    width: 48px;
+    height: 48px;
 
-    height:
-        48px;
+    display: flex;
 
-    display:
-        flex;
+    align-items: center;
+    justify-content: center;
 
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    border-radius:
-        12px;
+    border-radius: 12px;
 
     background:
         #eef5ff;
 
-    font-size:
-        22px;
+    font-size: 22px;
 }
 
 
@@ -555,8 +518,7 @@
     color:
         #1f2937;
 
-    font-size:
-        21px;
+    font-size: 21px;
 
     margin:
         0 0 4px;
@@ -567,11 +529,9 @@
     color:
         #64748b;
 
-    font-size:
-        12px;
+    font-size: 12px;
 
-    margin:
-        0;
+    margin: 0;
 }
 
 
@@ -580,32 +540,24 @@
 ========================================================= */
 
 .account-info-grid {
-    display:
-        flex;
+    display: flex;
 
-    flex-direction:
-        column;
+    flex-direction: column;
 
-    gap:
-        10px;
+    gap: 10px;
 
-    margin-bottom:
-        20px;
+    margin-bottom: 20px;
 }
 
 
 .account-info-row {
-    display:
-        flex;
+    display: flex;
 
-    align-items:
-        center;
+    align-items: center;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
-    gap:
-        15px;
+    gap: 15px;
 
     padding:
         13px 14px;
@@ -613,8 +565,7 @@
     border:
         1px solid #e5e7eb;
 
-    border-radius:
-        10px;
+    border-radius: 10px;
 
     background:
         #f8fafc;
@@ -625,8 +576,7 @@
     color:
         #64748b;
 
-    font-size:
-        13px;
+    font-size: 13px;
 }
 
 
@@ -634,11 +584,9 @@
     color:
         #1f2937;
 
-    font-size:
-        14px;
+    font-size: 14px;
 
-    text-align:
-        right;
+    text-align: right;
 }
 
 
@@ -647,23 +595,18 @@
 ========================================================= */
 
 .account-password-form {
-    display:
-        flex;
+    display: flex;
 
-    flex-direction:
-        column;
+    flex-direction: column;
 
-    gap:
-        10px;
+    gap: 10px;
 }
 
 
 .account-password-form input {
-    width:
-        100%;
+    width: 100%;
 
-    height:
-        46px;
+    height: 46px;
 
     padding:
         0 13px;
@@ -671,14 +614,11 @@
     border:
         1px solid #d7deea;
 
-    border-radius:
-        10px;
+    border-radius: 10px;
 
-    outline:
-        none;
+    outline: none;
 
-    font-size:
-        14px;
+    font-size: 14px;
 
     background:
         #fbfcff;
@@ -690,7 +630,7 @@
         #1769e0;
 
     background:
-        #ffffff;
+        white;
 
     box-shadow:
         0 0 0 3px
@@ -708,14 +648,11 @@
 ========================================================= */
 
 .account-message {
-    min-height:
-        20px;
+    min-height: 20px;
 
-    font-size:
-        12px;
+    font-size: 12px;
 
-    line-height:
-        1.5;
+    line-height: 1.5;
 }
 
 
@@ -737,32 +674,24 @@
 
 .account-modal-primary,
 .account-modal-secondary {
-    width:
-        100%;
+    width: 100%;
 
-    height:
-        46px;
+    height: 46px;
 
     padding:
         0 18px;
 
-    margin:
-        0;
+    margin: 0;
 
-    border:
-        none;
+    border: none;
 
-    border-radius:
-        10px;
+    border-radius: 10px;
 
-    font-size:
-        14px;
+    font-size: 14px;
 
-    font-weight:
-        bold;
+    font-weight: bold;
 
-    cursor:
-        pointer;
+    cursor: pointer;
 }
 
 
@@ -770,8 +699,7 @@
     background:
         #1769e0;
 
-    color:
-        #ffffff;
+    color: white;
 }
 
 
@@ -806,32 +734,26 @@
 @media (max-width: 600px) {
 
     .account-toggle {
-        left:
-            12px;
+        left: 12px !important;
+        top: 12px !important;
 
-        top:
-            12px;
+        width: 44px !important;
+        height: 44px !important;
 
-        width:
-            44px;
+        min-width: 44px !important;
+        min-height: 44px !important;
 
-        height:
-            44px;
-
-        font-size:
-            19px;
+        font-size: 19px !important;
     }
 
 
     .account-sidebar {
-        width:
-            270px;
+        width: 270px !important;
     }
 
 
     .account-modal {
-        max-width:
-            100%;
+        max-width: 100%;
 
         padding:
             25px 20px;
