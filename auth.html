@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        PTE Trainer - Login
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="assets/css/auth.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-box">
+
+        <h1>
+            PTE Trainer
+        </h1>
+
+
+        <p class="auth-subtitle">
+            Practice smarter. Track your progress.
+        </p>
+
+
+        <div class="auth-tabs">
+
+            <button
+                id="login-tab"
+                class="auth-tab active"
+                onclick="showLogin()"
+            >
+                Login
+            </button>
+
+
+            <button
+                id="register-tab"
+                class="auth-tab"
+                onclick="showRegister()"
+            >
+                Register
+            </button>
+
+        </div>
+
+
+        <!-- =====================
+             LOGIN
+        ====================== -->
+
+        <div
+            id="login-form"
+            class="auth-form"
+        >
+
+            <h2>
+                Welcome Back
+            </h2>
+
+
+            <input
+                id="login-username"
+                type="text"
+                placeholder="Username"
+                autocomplete="username"
+            >
+
+
+            <input
+                id="login-password"
+                type="password"
+                placeholder="Password"
+                autocomplete="current-password"
+            >
+
+
+            <button
+                class="auth-submit"
+                onclick="loginUser()"
+            >
+
+                Login
+
+            </button>
+
+
+            <div
+                id="login-message"
+                class="auth-message"
+            ></div>
+
+        </div>
+
+
+        <!-- =====================
+             REGISTER
+        ====================== -->
+
+        <div
+            id="register-form"
+            class="auth-form hidden"
+        >
+
+            <h2>
+                Create Account
+            </h2>
+
+
+            <input
+                id="register-username"
+                type="text"
+                placeholder="Username"
+                autocomplete="username"
+            >
+
+
+            <input
+                id="register-password"
+                type="password"
+                placeholder="Password"
+                autocomplete="new-password"
+            >
+
+
+            <input
+                id="register-password-confirm"
+                type="password"
+                placeholder="Confirm Password"
+                autocomplete="new-password"
+            >
+
+
+            <button
+                class="auth-submit"
+                onclick="registerUser()"
+            >
+
+                Create Account
+
+            </button>
+
+
+            <div
+                id="register-message"
+                class="auth-message"
+            ></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="assets/js/auth.js"></script>
+
+</body>
+
+</html>

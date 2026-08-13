@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        My Mistakes - PTE Trainer
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="assets/css/practice.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="assets/css/account.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        📚 My Mistakes
+    </h1>
+
+
+    <h2>
+        WFD & LFIB
+    </h2>
+
+</header>
+
+
+<main>
+
+    <div class="completed">
+
+        <div id="mistakes-page-content">
+
+            Loading...
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     AUTH FIRST
+===================================================== -->
+
+<script src="assets/js/auth.js"></script>
+
+
+<!-- =====================================================
+     MISTAKE BANK
+===================================================== -->
+
+<script src="assets/js/mistakes.js"></script>
+
+
+<script>
+
+/* =========================================================
+   CALCULATE STATS
+========================================================= */
+
+function calculateStats(
+    items
+) {
+
+    return {
+
+        words:
+            items.length,
+
+        mistakes:
+            items.reduce(
+                (
+                    sum,
+                    item
+                ) =>
+                    sum +
+                    item.mistakes,
+                0
+            ),
+
+        correct:
+            items.reduce(
+                (
+                    sum,
+                    item
+                ) =>
+                    sum +
+                    item.correct,
+                0
+            ),
+
+        weak:
+            items.filter(
+                item =>
+                    item.correctStreak < 3
+            ).length
+
+    };
+
+}
+
+
+/* =========================================================
+   RENDER PAGE
+========================================================= */
+
+function renderMistakesPage() {
+
+    const container =
+        document.getElementById(
+            "mistakes-page-content"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    /* =========================
+       WFD
+    ========================= */
+
+    const wfd =
+        typeof getAllMistakes ===
+        "function"
+
+            ? getAllMistakes()
+
+            : [];
+
+
+    const wfdWeak =
+        typeof getWeakWords ===
+        "function"
+
+            ? getWeakWords()
+
+            : [];
+
+
+    /* =========================
+       LFIB
+    ========================= */
+
+    const lfib =
+        typeof getAllLFIBMistakes ===
+        "function"
+
+            ? getAllLFIBMistakes()
+
+            : [];
+
+
+    const lfibWeak =
+        typeof getWeakLFIBWords ===
+        "function"
+
+            ? getWeakLFIBWords()
+
+            : [];
+
+
+    const wfdStats =
+        calculateStats(
+            wfd
+        );
+
+
+    const lfibStats =
+        calculateStats(
+            lfib
+        );
+
+
+    /* =====================================================
+       NO MISTAKES
+    ===================================================== */
+
+    if (
+        wfd.length === 0 &&
+        lfib.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <h2>
+                🎉 No Mistakes Yet
+            </h2>
+
+
+            <p>
+
+                Your WFD and LFIB mistake
+                history will appear here.
+
+            </p>
+
+
+            <button
+                class="back-button"
+                onclick="
+                    location.href=
+                    'practice.html?module=listening'
+                "
+            >
+
+                ← Back to Listening
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       MAIN HEADER
+    ===================================================== */
+
+    container.innerHTML = `
+
+        <h2>
+            My Mistakes
+        </h2>
+
+
+        <p>
+
+            Your mistakes are separated
+            by practice type.
+
+        </p>
+
+
+        <!-- =================================================
+             WFD
+        ================================================= -->
+
+        <div class="mistake-module-card">
+
+            <div class="mistake-module-header">
+
+                <div>
+
+                    <h3>
+                        🎧 WFD Mistakes
+                    </h3>
+
+
+                    <p>
+
+                        ${wfdStats.words}
+                        tracked words
+                        •
+                        ${wfdStats.mistakes}
+                        mistakes
+
+                    </p>
+
+                </div>
+
+
+                ${
+                    wfdWeak.length > 0
+
+                        ? `
+
+                            <button
+                                class="
+                                    module-practice-btn
+                                "
+                                onclick="
+                                    location.href=
+                                    'practice.html?module=listening&type=wfd&mode=mistake'
+                                "
+                            >
+
+                                Practice WFD
+
+                            </button>
+
+                        `
+
+                        : ""
+                }
+
+            </div>
+
+
+            ${
+                wfd.length > 0
+
+                    ? `
+
+                        <div
+                            class="
+                                mistake-page-list
+                            "
+                        >
+
+                            ${wfd
+                                .map(
+                                    item =>
+                                        renderMistakeItem(
+                                            item
+                                        )
+                                )
+                                .join("")
+                            }
+
+                        </div>
+
+                    `
+
+                    : `
+
+                        <div
+                            class="empty-module"
+                        >
+
+                            No WFD mistakes yet.
+
+                        </div>
+
+                    `
+            }
+
+        </div>
+
+
+        <!-- =================================================
+             LFIB
+        ================================================= -->
+
+        <div
+            class="
+                mistake-module-card
+                lfib-card
+            "
+        >
+
+            <div
+                class="
+                    mistake-module-header
+                "
+            >
+
+                <div>
+
+                    <h3>
+                        📝 LFIB Mistakes
+                    </h3>
+
+
+                    <p>
+
+                        ${lfibStats.words}
+                        tracked words
+                        •
+                        ${lfibStats.mistakes}
+                        mistakes
+
+                    </p>
+
+                </div>
+
+
+                ${
+                    lfibWeak.length > 0
+
+                        ? `
+
+                            <button
+                                class="
+                                    module-practice-btn
+                                "
+                                onclick="
+                                    location.href=
+                                    'practice.html?module=listening&type=lfib&mode=mistake'
+                                "
+                            >
+
+                                Practice LFIB
+
+                            </button>
+
+                        `
+
+                        : ""
+                }
+
+            </div>
+
+
+            ${
+                lfib.length > 0
+
+                    ? `
+
+                        <div
+                            class="
+                                mistake-page-list
+                            "
+                        >
+
+                            ${lfib
+                                .map(
+                                    item =>
+                                        renderMistakeItem(
+                                            item
+                                        )
+                                )
+                                .join("")
+                            }
+
+                        </div>
+
+                    `
+
+                    : `
+
+                        <div
+                            class="empty-module"
+                        >
+
+                            No LFIB mistakes yet.
+
+                        </div>
+
+                    `
+            }
+
+        </div>
+
+
+        <!-- =================================================
+             CLEAR ALL
+        ================================================= -->
+
+        <div
+            class="
+                mistake-management
+            "
+        >
+
+            <button
+                class="
+                    clear-mistakes-btn
+                "
+                onclick="
+                    confirmClearAllMistakes()
+                "
+            >
+
+                🗑️ Clear All Mistakes
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             BACK
+        ================================================= -->
+
+        <div
+            class="
+                mistake-navigation
+            "
+        >
+
+            <button
+                class="back-button"
+                onclick="
+                    location.href=
+                    'practice.html?module=listening'
+                "
+            >
+
+                ← Back to Listening
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   RENDER ITEM
+========================================================= */
+
+function renderMistakeItem(
+    item
+) {
+
+    const isWeak =
+        item.correctStreak < 3;
+
+
+    const status =
+        isWeak
+
+            ? `
+
+                <span
+                    class="
+                        mistake-status
+                        weak
+                    "
+                >
+
+                    🔴 Needs Review
+
+                </span>
+
+            `
+
+            : `
+
+                <span
+                    class="
+                        mistake-status
+                        learned
+                    "
+                >
+
+                    🟢 Learned
+
+                </span>
+
+            `;
+
+
+    return `
+
+        <div
+            class="
+                mistake-page-item
+                ${
+                    isWeak
+                        ? "is-weak"
+                        : "is-learned"
+                }
+            "
+        >
+
+            <div
+                class="
+                    mistake-word-info
+                "
+            >
+
+                <strong>
+
+                    ${escapeHtml(
+                        item.word
+                    )}
+
+                </strong>
+
+
+                ${status}
+
+            </div>
+
+
+            <div
+                class="
+                    mistake-stats
+                "
+            >
+
+                <span>
+
+                    ❌
+                    ${item.mistakes}
+                    mistakes
+
+                </span>
+
+
+                <span>
+
+                    ✅
+                    ${item.correct}
+                    correct
+
+                </span>
+
+
+                <span>
+
+                    🔥
+                    ${item.correctStreak}/3
+
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CLEAR ALL
+========================================================= */
+
+function confirmClearAllMistakes() {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete ALL your WFD and LFIB mistake history?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    if (
+        typeof clearMistakeBank ===
+        "function"
+    ) {
+
+        clearMistakeBank();
+
+    }
+
+
+    if (
+        typeof clearLFIBMistakeBank ===
+        "function"
+    ) {
+
+        clearLFIBMistakeBank();
+
+    }
+
+
+    renderMistakesPage();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        String(
+            value ?? ""
+        );
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+renderMistakesPage();
+
+</script>
+
+
+<style>
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.mistake-navigation {
+
+    margin-top:
+        15px;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+}
+
+
+/* =========================================================
+   MISTAKE LIST
+========================================================= */
+
+.mistake-page-list {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        8px;
+
+    width:
+        100%;
+
+}
+
+
+/* =========================================================
+   MISTAKE ITEM
+========================================================= */
+
+.mistake-page-item {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    padding:
+        12px 15px;
+
+    background:
+        white;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius:
+        10px;
+
+}
+
+
+/* =========================================================
+   WORD INFO
+========================================================= */
+
+.mistake-word-info {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    flex-wrap:
+        wrap;
+
+}
+
+
+.mistake-word-info strong {
+
+    color:
+        #1f2937;
+
+    font-size:
+        16px;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.mistake-status {
+
+    padding:
+        3px 7px;
+
+    border-radius:
+        5px;
+
+    font-size:
+        10px;
+
+    font-weight:
+        bold;
+
+}
+
+
+.mistake-status.weak {
+
+    color:
+        #b91c1c;
+
+    background:
+        #fee2e2;
+
+}
+
+
+.mistake-status.learned {
+
+    color:
+        #15803d;
+
+    background:
+        #dcfce7;
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.mistake-stats {
+
+    display:
+        flex;
+
+    gap:
+        10px;
+
+    color:
+        #64748b;
+
+    font-size:
+        12px;
+
+    white-space:
+        nowrap;
+
+}
+
+
+/* =========================================================
+   MANAGEMENT
+========================================================= */
+
+.mistake-management {
+
+    margin-top:
+        30px;
+
+    padding-top:
+        20px;
+
+    border-top:
+        1px solid #e5e7eb;
+
+}
+
+
+/* =========================================================
+   CLEAR BUTTON
+========================================================= */
+
+.clear-mistakes-btn {
+
+    background:
+        #dc2626;
+
+    min-width:
+        230px;
+
+    border:
+        none;
+
+    border-radius:
+        12px;
+
+    color:
+        white;
+
+    padding:
+        13px 24px;
+
+    font-weight:
+        bold;
+
+    cursor:
+        pointer;
+
+}
+
+
+.clear-mistakes-btn:hover {
+
+    background:
+        #b91c1c;
+
+}
+
+
+/* =========================================================
+   EMPTY MODULE
+========================================================= */
+
+.empty-module {
+
+    padding:
+        12px;
+
+    text-align:
+        center;
+
+    color:
+        #64748b;
+
+    background:
+        white;
+
+    border-radius:
+        10px;
+
+}
+
+
+/* =========================================================
+   MODULE CARD
+========================================================= */
+
+.mistake-module-card {
+
+    margin:
+        25px auto;
+
+    padding:
+        20px;
+
+    max-width:
+        700px;
+
+    background:
+        #f8fafc;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius:
+        16px;
+
+    text-align:
+        left;
+
+}
+
+
+.lfib-card {
+
+    margin-top:
+        15px;
+
+}
+
+
+/* =========================================================
+   MODULE HEADER
+========================================================= */
+
+.mistake-module-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    margin-bottom:
+        15px;
+
+}
+
+
+.mistake-module-header h3 {
+
+    color:
+        #1769e0;
+
+    margin-bottom:
+        5px;
+
+}
+
+
+.mistake-module-header p {
+
+    color:
+        #64748b;
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   PRACTICE BUTTON
+========================================================= */
+
+.module-practice-btn {
+
+    margin:
+        0;
+
+    padding:
+        9px 14px;
+
+    font-size:
+        12px;
+
+    background:
+        #dc2626;
+
+    color:
+        white;
+
+    border:
+        none;
+
+    border-radius:
+        9px;
+
+    font-weight:
+        bold;
+
+    white-space:
+        nowrap;
+
+    cursor:
+        pointer;
+
+}
+
+
+.module-practice-btn:hover {
+
+    background:
+        #b91c1c;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .mistake-page-item {
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .mistake-stats {
+
+        flex-wrap:
+            wrap;
+
+        white-space:
+            normal;
+
+    }
+
+
+    .mistake-module-header {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .module-practice-btn {
+
+        width:
+            100%;
+
+    }
+
+
+    .mistake-navigation {
+
+        width:
+            100%;
+
+    }
+
+
+    .mistake-navigation .back-button {
+
+        width:
+            100%;
+
+    }
+
+
+    .clear-mistakes-btn {
+
+        width:
+            100%;
+
+    }
+
+}
+
+</style>
+
+
+</body>
+
+</html>
