@@ -1,3 +1,12 @@
+/* =========================================================
+   PTE TRAINER - PRACTICE ROUTER
+========================================================= */
+
+
+/* =========================================================
+   URL PARAMETERS
+========================================================= */
+
 const params =
     new URLSearchParams(
         window.location.search
@@ -5,16 +14,26 @@ const params =
 
 
 const module =
-    params.get("module");
-
-
-const mode =
-    params.get("mode");
+    params.get(
+        "module"
+    );
 
 
 const type =
-    params.get("type");
+    params.get(
+        "type"
+    );
 
+
+const mode =
+    params.get(
+        "mode"
+    );
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
 const moduleTitle =
     document.getElementById(
@@ -28,16 +47,55 @@ const content =
     );
 
 
-/* =========================
+/* =========================================================
    LOAD PRACTICE
-========================= */
+========================================================= */
 
 function loadPractice() {
 
     if (!module) {
 
-        moduleTitle.textContent =
-            "No module selected";
+        if (moduleTitle) {
+
+            moduleTitle.textContent =
+                "PTE Practice";
+
+        }
+
+
+        if (content) {
+
+            content.innerHTML = `
+
+                <div class="completed">
+
+                    <h2>
+                        No Module Selected
+                    </h2>
+
+
+                    <p>
+                        Please choose a practice module.
+                    </p>
+
+
+                    <button
+                        class="back-button"
+                        onclick="
+                            location.href='index.html'
+                        "
+                    >
+
+                        ← Back to Home
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+
 
         return;
 
@@ -45,11 +103,24 @@ function loadPractice() {
 
 
     if (
-        module === "listening"
+        moduleTitle
     ) {
 
         moduleTitle.textContent =
-            "Listening";
+            capitalizeFirstLetter(
+                module
+            );
+
+    }
+
+
+    /* =====================================================
+       LISTENING
+    ===================================================== */
+
+    if (
+        module === "listening"
+    ) {
 
         showListening();
 
@@ -58,58 +129,66 @@ function loadPractice() {
     }
 
 
-    moduleTitle.textContent =
-        module
-            .charAt(0)
-            .toUpperCase() +
-        module.slice(1);
+    /* =====================================================
+       OTHER MODULES
+    ===================================================== */
 
-
-    content.innerHTML = `
-
-        <div class="completed">
-
-            <h2>
-                Coming Soon
-            </h2>
-
-
-            <p>
-                This module is under development.
-            </p>
-
-
-            <button
-                class="listening-menu-btn secondary"
-                onclick="
-                    location.href='index.html'
-                "
-            >
-
-                ← Back to Home
-
-            </button>
-
-        </div>
-
-    `;
+    showComingSoon(
+        capitalizeFirstLetter(
+            module
+        )
+    );
 
 }
 
 
-/* =========================
-   LISTENING MENU
-========================= */
+/* =========================================================
+   LISTENING MENU / ROUTER
+========================================================= */
 
 function showListening() {
 
     /*
-        Direct WFD
+        WFD
     */
 
     if (
         type === "wfd"
     ) {
+
+        /*
+            Mistake Review
+        */
+
+        if (
+            mode === "mistake"
+        ) {
+
+            if (
+                typeof startWFDMistakeReview ===
+                "function"
+            ) {
+
+                startWFDMistakeReview();
+
+            } else {
+
+                showModuleError(
+                    "WFD Mistake Review",
+                    "WFD Mistake Review function is not available."
+                );
+
+            }
+
+
+            return;
+
+        }
+
+
+        /*
+            Normal WFD
+        */
 
         startWFD();
 
@@ -119,12 +198,16 @@ function showListening() {
 
 
     /*
-        Direct LFIB
+        LFIB
     */
 
     if (
         type === "lfib"
     ) {
+
+        /*
+            Mistake Review
+        */
 
         if (
             mode === "mistake"
@@ -137,13 +220,26 @@ function showListening() {
 
                 startLFIBMistakeReview();
 
+            } else {
+
+                showModuleError(
+                    "LFIB Mistake Review",
+                    "LFIB Mistake Review function is not available."
+                );
+
             }
 
-        } else {
 
-            startLFIB();
+            return;
 
         }
+
+
+        /*
+            Normal LFIB
+        */
+
+        startLFIB();
 
         return;
 
@@ -151,24 +247,57 @@ function showListening() {
 
 
     /*
-        Main Listening menu
+        Main Listening Menu
     */
+
+    renderListeningMenu();
+
+}
+
+
+/* =========================================================
+   LISTENING MENU
+========================================================= */
+
+function renderListeningMenu() {
+
+    if (!content) {
+
+        return;
+
+    }
+
 
     content.innerHTML = `
 
-        <div class="listening-menu">
+        <div class="wfd-box listening-menu">
 
-            <div class="listening-menu-subtitle">
+            <h2>
 
-                Choose a Listening practice type
+                Listening Practice
 
-            </div>
+            </h2>
 
 
-            <div class="listening-menu-buttons">
+            <p>
 
+                Choose your listening practice type.
+
+            </p>
+
+
+            <div
+                class="
+                    listening-menu-buttons
+                "
+            >
+
+                <!-- =====================
+                     WFD
+                ====================== -->
 
                 <button
+                    type="button"
                     class="
                         listening-menu-btn
                         wfd-btn
@@ -178,32 +307,58 @@ function showListening() {
                     "
                 >
 
-                    <span class="listening-icon">
+                    <span
+                        class="
+                            listening-icon
+                        "
+                    >
+
                         🎧
+
                     </span>
 
 
-                    <span class="listening-btn-content">
+                    <span
+                        class="
+                            listening-btn-content
+                        "
+                    >
 
                         <strong>
-                            WFD
+
+                            WFD - Write From Dictation
+
                         </strong>
 
+
                         <small>
-                            Write From Dictation
+
+                            Listen and type the sentence
+
                         </small>
 
                     </span>
 
 
-                    <span class="listening-arrow">
+                    <span
+                        class="
+                            listening-arrow
+                        "
+                    >
+
                         →
+
                     </span>
 
                 </button>
 
 
+                <!-- =====================
+                     LFIB
+                ====================== -->
+
                 <button
+                    type="button"
                     class="
                         listening-menu-btn
                         lfib-btn
@@ -213,32 +368,58 @@ function showListening() {
                     "
                 >
 
-                    <span class="listening-icon">
+                    <span
+                        class="
+                            listening-icon
+                        "
+                    >
+
                         📝
+
                     </span>
 
 
-                    <span class="listening-btn-content">
+                    <span
+                        class="
+                            listening-btn-content
+                        "
+                    >
 
                         <strong>
-                            LFIB
+
+                            LFIB - Listening Fill in the Blanks
+
                         </strong>
 
+
                         <small>
-                            Listening Fill in the Blanks
+
+                            Listen and type the missing words
+
                         </small>
 
                     </span>
 
 
-                    <span class="listening-arrow">
+                    <span
+                        class="
+                            listening-arrow
+                        "
+                    >
+
                         →
+
                     </span>
 
                 </button>
 
 
+                <!-- =====================
+                     MISTAKES
+                ====================== -->
+
                 <button
+                    type="button"
                     class="
                         listening-menu-btn
                         mistakes-btn
@@ -248,32 +429,58 @@ function showListening() {
                     "
                 >
 
-                    <span class="listening-icon">
+                    <span
+                        class="
+                            listening-icon
+                        "
+                    >
+
                         📚
+
                     </span>
 
 
-                    <span class="listening-btn-content">
+                    <span
+                        class="
+                            listening-btn-content
+                        "
+                    >
 
                         <strong>
+
                             My Mistakes
+
                         </strong>
 
+
                         <small>
-                            WFD & LFIB Mistakes
+
+                            Review WFD and LFIB mistakes
+
                         </small>
 
                     </span>
 
 
-                    <span class="listening-arrow">
+                    <span
+                        class="
+                            listening-arrow
+                        "
+                    >
+
                         →
+
                     </span>
 
                 </button>
 
 
+                <!-- =====================
+                     BACK
+                ====================== -->
+
                 <button
+                    type="button"
                     class="
                         listening-menu-btn
                         secondary
@@ -283,15 +490,27 @@ function showListening() {
                     "
                 >
 
-                    <span class="listening-icon">
+                    <span
+                        class="
+                            listening-icon
+                        "
+                    >
+
                         ←
+
                     </span>
 
 
-                    <span class="listening-btn-content">
+                    <span
+                        class="
+                            listening-btn-content
+                        "
+                    >
 
                         <strong>
+
                             Back to Home
+
                         </strong>
 
                     </span>
@@ -307,9 +526,9 @@ function showListening() {
 }
 
 
-/* =========================
+/* =========================================================
    START WFD
-========================= */
+========================================================= */
 
 function startWFD() {
 
@@ -327,24 +546,17 @@ function startWFD() {
     }
 
 
-    content.innerHTML = `
-
-        <div class="completed">
-
-            <h2>
-                WFD module is loading...
-            </h2>
-
-        </div>
-
-    `;
+    showModuleError(
+        "WFD",
+        "WFD module is not available."
+    );
 
 }
 
 
-/* =========================
+/* =========================================================
    START LFIB
-========================= */
+========================================================= */
 
 function startLFIB() {
 
@@ -362,19 +574,57 @@ function startLFIB() {
     }
 
 
+    showModuleError(
+        "LFIB",
+        "LFIB module is not available."
+    );
+
+}
+
+
+/* =========================================================
+   COMING SOON
+========================================================= */
+
+function showComingSoon(
+    moduleName
+) {
+
+    if (!content) {
+
+        return;
+
+    }
+
+
     content.innerHTML = `
 
         <div class="completed">
 
             <h2>
-                LFIB module is loading...
+
+                ${moduleName}
+
             </h2>
 
 
             <p>
-                Please check that
-                lfib.js is loaded.
+
+                This module is under development.
+
             </p>
+
+
+            <button
+                class="back-button"
+                onclick="
+                    location.href='index.html'
+                "
+            >
+
+                ← Back to Home
+
+            </button>
 
         </div>
 
@@ -383,8 +633,83 @@ function startLFIB() {
 }
 
 
-/* =========================
-   INIT
-========================= */
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showModuleError(
+    moduleName,
+    message
+) {
+
+    if (!content) {
+
+        return;
+
+    }
+
+
+    content.innerHTML = `
+
+        <div class="completed">
+
+            <h2>
+
+                ${moduleName}
+
+            </h2>
+
+
+            <p>
+
+                ${message}
+
+            </p>
+
+
+            <button
+                class="back-button"
+                onclick="
+                    location.href='practice.html?module=listening'
+                "
+            >
+
+                ← Back to Listening
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CAPITALIZE
+========================================================= */
+
+function capitalizeFirstLetter(
+    text
+) {
+
+    if (!text) {
+
+        return "";
+
+    }
+
+
+    return (
+        text.charAt(0).toUpperCase() +
+        text.slice(1)
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
 loadPractice();
