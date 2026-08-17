@@ -664,7 +664,9 @@ function searchWFDQuestions(
                             class="result-text"
                         >
 
-                            ${question.text}
+                            ${escapeWFDSafe(
+                                question.text
+                            )}
 
                         </span>
 
@@ -899,7 +901,14 @@ function showWFDQuestion() {
     }
 
 
-    saveWFDProgress();
+    if (
+        wfdPracticeMode !==
+        "mistake"
+    ) {
+
+        saveWFDProgress();
+
+    }
 
 
     if (
@@ -1210,7 +1219,7 @@ function showWFDQuestion() {
 
 
 /* =========================================================
-   PLAY AUDIO
+   PLAY NORMAL WFD AUDIO
 ========================================================= */
 
 function playWFD() {
@@ -1222,6 +1231,13 @@ function playWFD() {
         wfdQuestionQueue[
             wfdQueuePosition
         ];
+
+
+    if (!task) {
+
+        return;
+
+    }
 
 
     const question =
@@ -1447,7 +1463,7 @@ function startWFDAnswerTimer() {
 
 
 /* =========================================================
-   CHECK WFD
+   CHECK NORMAL WFD
 ========================================================= */
 
 function checkWFD() {
@@ -1500,6 +1516,13 @@ function checkWFD() {
         ];
 
 
+    if (!task) {
+
+        return;
+
+    }
+
+
     const expectedWords =
         normalizeWFDWords(
             task.question.text
@@ -1512,21 +1535,45 @@ function checkWFD() {
         );
 
 
+    const remainingUserWords =
+        [...userWords];
+
+
     const correctWords =
         [];
 
 
+    const missingWords =
+        [];
+
+
     expectedWords.forEach(
-        word => {
+        expectedWord => {
+
+            const index =
+                remainingUserWords.indexOf(
+                    expectedWord
+                );
+
 
             if (
-                userWords.includes(
-                    word
-                )
+                index !== -1
             ) {
 
                 correctWords.push(
-                    word
+                    expectedWord
+                );
+
+
+                remainingUserWords.splice(
+                    index,
+                    1
+                );
+
+            } else {
+
+                missingWords.push(
+                    expectedWord
                 );
 
             }
@@ -1555,37 +1602,58 @@ function checkWFD() {
 
 
     /*
-        Only words that the user
-        actually typed incorrectly
-        are stored.
+        Store only the correct expected
+        word when the user typed a wrong
+        replacement.
+
+        Example:
+
+        Expected: skills
+        User: skils
+
+        Store:
+        skills
+
+        Do NOT store:
+        skils
     */
 
-    const wrongUserWords =
-        userWords.filter(
-            word =>
-                !expectedWords.includes(
-                    word
-                )
+    const typedWrongCount =
+        Math.min(
+            remainingUserWords.length,
+            missingWords.length
         );
 
 
-    wrongUserWords.forEach(
-        word => {
+    for (
+        let i = 0;
+        i < typedWrongCount;
+        i++
+    ) {
 
-            if (
-                typeof recordWordMistake ===
-                "function"
-            ) {
+        const correctTarget =
+            missingWords[i];
 
-                recordWordMistake(
-                    word
-                );
 
-            }
+        if (
+            typeof recordWordMistake ===
+            "function"
+        ) {
+
+            recordWordMistake(
+                correctTarget
+            );
 
         }
-    );
 
+    }
+
+
+    /*
+        Correct words that already
+        exist in Mistake Bank get
+        correct history/streak.
+    */
 
     correctWords.forEach(
         word => {
@@ -1626,7 +1694,9 @@ function checkWFD() {
                 <span
                     class="score-separator"
                 >
+
                     •
+
                 </span>
 
 
@@ -1646,28 +1716,50 @@ function checkWFD() {
 
             ${expectedWords
                 .map(
-                    word =>
-                        correctWords.includes(
-                            word
-                        )
-                            ? `
+                    word => {
+
+                        if (
+                            correctWords.includes(
+                                word
+                            )
+                        ) {
+
+                            return `
+
                                 <span
                                     class="
                                         correct-word
                                     "
                                 >
-                                    ${word}
+
+                                    ${escapeWFDSafe(
+                                        word
+                                    )}
+
                                 </span>
-                            `
-                            : `
-                                <span
-                                    class="
-                                        wrong-word
-                                    "
-                                >
-                                    ${word}
-                                </span>
-                            `
+
+                            `;
+
+                        }
+
+
+                        return `
+
+                            <span
+                                class="
+                                    wrong-word
+                                "
+                            >
+
+                                ${escapeWFDSafe(
+                                    word
+                                )}
+
+                            </span>
+
+                        `;
+
+                    }
                 )
                 .join("")
             }
@@ -1699,7 +1791,7 @@ function checkWFD() {
 
 
 /* =========================================================
-   MISTAKE REVIEW
+   MISTAKE REVIEW QUESTION
 ========================================================= */
 
 function showWFDMistakeReviewQuestion() {
@@ -1718,6 +1810,28 @@ function showWFDMistakeReviewQuestion() {
             "content"
         );
 
+
+    if (
+        !task ||
+        !task.focusWord
+    ) {
+
+        finishWFD();
+
+        return;
+
+    }
+
+
+    /*
+        IMPORTANT:
+
+        The focus word is NOT displayed
+        anywhere on the screen.
+
+        It is only used internally for
+        audio and answer checking.
+    */
 
     content.innerHTML = `
 
@@ -1749,7 +1863,7 @@ function showWFDMistakeReviewQuestion() {
 
             <div class="question-number">
 
-                Review Word
+                Mistake Review
 
             </div>
 
@@ -1879,6 +1993,23 @@ function playWFDMistakeWord() {
             wfdQueuePosition
         ];
 
+
+    if (
+        !task ||
+        !task.focusWord
+    ) {
+
+        finishWFD();
+
+        return;
+
+    }
+
+
+    /*
+        Only the target word is spoken.
+        It is NOT displayed on screen.
+    */
 
     playWFDSpeech(
         task.focusWord
@@ -2039,8 +2170,10 @@ function playWFDSpeech(
             textarea.disabled =
                 false;
 
+
             checkButton.disabled =
                 false;
+
 
             nextButton.disabled =
                 false;
@@ -2083,16 +2216,31 @@ function checkWFDMistake() {
         );
 
 
-    const userWord =
-        normalizeWFDWords(
-            textarea.value
-        )[0] || "";
-
-
     const task =
         wfdQuestionQueue[
             wfdQueuePosition
         ];
+
+
+    if (
+        !task ||
+        !task.focusWord
+    ) {
+
+        return;
+
+    }
+
+
+    const userWords =
+        normalizeWFDWords(
+            textarea.value
+        );
+
+
+    const userWord =
+        userWords[0] ||
+        "";
 
 
     const targetWord =
@@ -2130,6 +2278,11 @@ function checkWFDMistake() {
         typeof recordReviewResult ===
         "function"
     ) {
+
+        /*
+            Always update the CORRECT
+            canonical word in the bank.
+        */
 
         recordReviewResult(
             targetWord,
@@ -2185,13 +2338,15 @@ function checkWFDMistake() {
                     <span
                         class="score-separator"
                     >
+
                         •
+
                     </span>
 
 
                     <span>
 
-                        ${targetWord}
+                        Correct answer
 
                     </span>
 
@@ -2202,10 +2357,7 @@ function checkWFDMistake() {
 
             <div class="no-mistakes">
 
-                Great! You remembered
-                <strong>
-                    ${targetWord}
-                </strong>.
+                Great job!
 
 
                 ${
@@ -2248,7 +2400,9 @@ function checkWFDMistake() {
                     <span
                         class="score-separator"
                     >
+
                         •
+
                     </span>
 
 
@@ -2265,19 +2419,12 @@ function checkWFDMistake() {
 
             <div class="error">
 
-                You wrote:
-                <strong>
-                    ${userWord}
-                </strong>
-
+                Your answer was not correct.
 
                 <br>
 
-
-                Correct word:
-                <strong>
-                    ${targetWord}
-                </strong>
+                The word has been kept
+                in Mistake Review.
 
             </div>
 
@@ -2322,21 +2469,66 @@ function startWFDMistakeReview() {
     weak.forEach(
         item => {
 
-            const targetWord =
+            const storedWord =
                 normalizeWFDWord(
                     item.word
                 );
 
 
-            const matchingQuestion =
-                wfdQuestions.find(
-                    question =>
-                        normalizeWFDWords(
-                            question.text
-                        ).includes(
-                            targetWord
-                        )
+            if (!storedWord) {
+
+                return;
+
+            }
+
+
+            /*
+                1. Exact match first.
+            */
+
+            let matchingQuestion =
+                findQuestionByExactWord(
+                    storedWord
                 );
+
+
+            let focusWord =
+                storedWord;
+
+
+            /*
+                2. If exact match does not
+                   exist, search for the
+                   closest real WFD word.
+
+                   This helps with older
+                   mistake records such as:
+
+                   skils
+                   skills
+                */
+
+            if (
+                !matchingQuestion
+            ) {
+
+                const fuzzy =
+                    findClosestWFDWord(
+                        storedWord
+                    );
+
+
+                if (fuzzy) {
+
+                    matchingQuestion =
+                        fuzzy.question;
+
+                    focusWord =
+                        fuzzy.word;
+
+                }
+
+            }
 
 
             if (
@@ -2349,7 +2541,7 @@ function startWFDMistakeReview() {
                         matchingQuestion,
 
                     focusWord:
-                        targetWord
+                        focusWord
 
                 });
 
@@ -2359,8 +2551,48 @@ function startWFDMistakeReview() {
     );
 
 
+    /*
+        Remove duplicate words.
+    */
+
+    const uniqueTasks =
+        [];
+
+
+    const seen =
+        new Set();
+
+
+    reviewTasks.forEach(
+        task => {
+
+            const key =
+                normalizeWFDWord(
+                    task.focusWord
+                );
+
+
+            if (
+                seen.has(key)
+            ) {
+
+                return;
+
+            }
+
+
+            seen.add(key);
+
+            uniqueTasks.push(
+                task
+            );
+
+        }
+    );
+
+
     if (
-        reviewTasks.length ===
+        uniqueTasks.length ===
         0
     ) {
 
@@ -2386,10 +2618,280 @@ function startWFDMistakeReview() {
 
 
     wfdQuestionQueue =
-        reviewTasks;
+        uniqueTasks;
 
 
     showWFDQuestion();
+
+}
+
+
+/* =========================================================
+   FIND EXACT WORD
+========================================================= */
+
+function findQuestionByExactWord(
+    targetWord
+) {
+
+    const normalizedTarget =
+        normalizeWFDWord(
+            targetWord
+        );
+
+
+    return (
+        wfdQuestions.find(
+            question => {
+
+                const words =
+                    normalizeWFDWords(
+                        question.text
+                    );
+
+
+                return words.includes(
+                    normalizedTarget
+                );
+
+            }
+        ) ||
+        null
+    );
+
+}
+
+
+/* =========================================================
+   FIND CLOSEST WORD
+========================================================= */
+
+function findClosestWFDWord(
+    targetWord
+) {
+
+    const normalizedTarget =
+        normalizeWFDWord(
+            targetWord
+        );
+
+
+    if (!normalizedTarget) {
+
+        return null;
+
+    }
+
+
+    let bestMatch =
+        null;
+
+
+    let bestDistance =
+        Infinity;
+
+
+    wfdQuestions.forEach(
+        question => {
+
+            const words =
+                normalizeWFDWords(
+                    question.text
+                );
+
+
+            words.forEach(
+                word => {
+
+                    if (
+                        word.length < 4 &&
+                        normalizedTarget.length < 4
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const distance =
+                        levenshteinDistance(
+                            normalizedTarget,
+                            word
+                        );
+
+
+                    if (
+                        distance <
+                        bestDistance
+                    ) {
+
+                        bestDistance =
+                            distance;
+
+
+                        bestMatch = {
+
+                            question:
+                                question,
+
+                            word:
+                                word
+
+                        };
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    if (
+        !bestMatch
+    ) {
+
+        return null;
+
+    }
+
+
+    const maxDistance =
+        Math.max(
+            1,
+            Math.floor(
+                normalizedTarget.length /
+                3
+            )
+        );
+
+
+    if (
+        bestDistance >
+        maxDistance
+    ) {
+
+        return null;
+
+    }
+
+
+    return bestMatch;
+
+}
+
+
+/* =========================================================
+   LEVENSHTEIN DISTANCE
+========================================================= */
+
+function levenshteinDistance(
+    a,
+    b
+) {
+
+    const matrix =
+        [];
+
+
+    const aLength =
+        a.length;
+
+
+    const bLength =
+        b.length;
+
+
+    for (
+        let i = 0;
+        i <= aLength;
+        i++
+    ) {
+
+        matrix[i] =
+            [i];
+
+    }
+
+
+    for (
+        let j = 0;
+        j <= bLength;
+        j++
+    ) {
+
+        matrix[0][j] =
+            j;
+
+    }
+
+
+    for (
+        let i = 1;
+        i <= aLength;
+        i++
+    ) {
+
+        for (
+            let j = 1;
+            j <= bLength;
+            j++
+        ) {
+
+            if (
+                a.charAt(
+                    i - 1
+                ) ===
+                b.charAt(
+                    j - 1
+                )
+            ) {
+
+                matrix[i][j] =
+                    matrix[
+                        i - 1
+                    ][
+                        j - 1
+                    ];
+
+            } else {
+
+                matrix[i][j] =
+                    Math.min(
+
+                        matrix[
+                            i - 1
+                        ][
+                            j
+                        ] + 1,
+
+                        matrix[
+                            i
+                        ][
+                            j - 1
+                        ] + 1,
+
+                        matrix[
+                            i - 1
+                        ][
+                            j - 1
+                        ] + 1
+
+                    );
+
+            }
+
+        }
+
+    }
+
+
+    return matrix[
+        aLength
+    ][
+        bLength
+    ];
 
 }
 
@@ -2437,7 +2939,15 @@ function nextWFD() {
     }
 
 
-    saveWFDProgress();
+    if (
+        wfdPracticeMode !==
+        "mistake"
+    ) {
+
+        saveWFDProgress();
+
+    }
+
 
     showWFDQuestion();
 
@@ -2733,14 +3243,16 @@ function displayWFDMistakeSummary() {
 
 
 /* =========================================================
-   NORMALIZE
+   NORMALIZE SINGLE WORD
 ========================================================= */
 
 function normalizeWFDWord(
     word
 ) {
 
-    return String(word || "")
+    return String(
+        word || ""
+    )
         .toLowerCase()
         .replace(
             /[.,!?;:'"()[\]{}]/g,
@@ -2751,18 +3263,51 @@ function normalizeWFDWord(
 }
 
 
+/* =========================================================
+   NORMALIZE WORDS
+========================================================= */
+
 function normalizeWFDWords(
     text
 ) {
 
-    return String(text || "")
+    return String(
+        text || ""
+    )
         .toLowerCase()
         .replace(
             /[.,!?;:'"()[\]{}]/g,
             ""
         )
         .split(/\s+/)
-        .filter(Boolean);
+        .filter(
+            Boolean
+        );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeWFDSafe(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        String(
+            value ?? ""
+        );
+
+
+    return div.innerHTML;
 
 }
 
@@ -2781,6 +3326,7 @@ function clearWFDTimers() {
             wfdAudioTimer
         );
 
+
         wfdAudioTimer =
             null;
 
@@ -2794,6 +3340,7 @@ function clearWFDTimers() {
         clearInterval(
             wfdAnswerTimer
         );
+
 
         wfdAnswerTimer =
             null;
